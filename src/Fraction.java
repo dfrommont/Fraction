@@ -1,5 +1,3 @@
-import java.sql.SQLOutput;
-
 public class Fraction {
 
     private Object numerator;
