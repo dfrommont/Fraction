@@ -7,5 +7,11 @@ public class FractionMain {
         System.out.println(a.display());
         c = c.simplify(c);
         System.out.println(c.display());
+        Fraction d = a.add(b);
+        Fraction e = a.subtract(b);
+        Fraction f = d.multiply(a);
+        Fraction g = e.divide(b);
+        System.out.println(f.display());
+        System.out.println(g.display());
     }
 }

@@ -95,9 +95,19 @@ public class Fraction {
         }
     }
 
-    //simplify
-    //add
-    //sub
-    //mult
-    //divide via KFC
+    public Fraction add(Fraction b) {
+        return new Fraction((this.getNumeratorValue()*b.getDenominatorValue()) + (b.getNumeratorValue()*this.getDenominatorValue()), this.getDenominatorValue()*b.getDenominatorValue());
+    }
+
+    public Fraction subtract(Fraction b) {
+        return new Fraction((this.getNumeratorValue()*b.getDenominatorValue()) - (b.getNumeratorValue()*this.getDenominatorValue()), this.getDenominatorValue()*b.getDenominatorValue());
+    }
+
+    public Fraction multiply(Fraction b) {
+        return new Fraction(this.getNumeratorValue()*b.getNumeratorValue(), this.getDenominatorValue()*b.getDenominatorValue());
+    }
+
+    public Fraction divide(Fraction b) {
+        return new Fraction(this.getNumeratorValue()*b.getDenominatorValue(), this.getDenominatorValue()*b.getNumeratorValue());
+    }
 }
