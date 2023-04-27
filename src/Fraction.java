@@ -1,113 +1,73 @@
 public class Fraction {
 
-    private Object numerator;
-    private Object denominator;
+    private Fraction numerator;
+    private Fraction denominator;
 
-    public Fraction(int numerator, int denominator) {
+    public Fraction(Object numerator, Object denominator) {
+        new Fraction(numerator, denominator);
+    }
+
+    private Fraction(double numerator, double denominator) {
+        this.numerator = new Fraction(numerator, 1);
+        this.denominator = new Fraction(denominator, 1);
+    }
+
+    private Fraction(Fraction numerator, Fraction denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
     }
 
-    public Fraction(float numerator, float denominator) {
-        int diff1 = ("" + numerator).length()-("" + numerator).indexOf('.')-1;
-        int diff2 = ("" + denominator).length()-("" + denominator).indexOf('.')-1;
-        diff1 = Math.max(diff2, diff1);
-        this.numerator = (int) (numerator*Math.pow(10, diff1));
-        this.denominator = (int) (denominator*Math.pow(10, diff1));
+    private Fraction(Fraction numerator, double denominator) {
+        this.numerator = numerator;
+        this.denominator = new Fraction(denominator, 1);
     }
 
-    public Fraction(double numerator, double denominator) {
-        int diff1 = ("" + numerator).length()-("" + numerator).indexOf('.')-1;
-        int diff2 = ("" + denominator).length()-("" + denominator).indexOf('.')-1;
-        diff1 = Math.max(diff2, diff1);
-        this.numerator = (int) (numerator*Math.pow(10, diff1));
-        this.denominator = (int) (denominator*Math.pow(10, diff1));
+    private Fraction(double numerator, Fraction denominator) {
+        this.numerator = new Fraction(numerator, 1);
+        this.denominator = denominator;
     }
 
-    public Fraction(Object numerator, Object denominator) {
-        if (numerator instanceof Integer && denominator instanceof Integer) {
-            this.numerator = numerator;
-            this.denominator = denominator;
-        } else if ((numerator instanceof Float && denominator instanceof Float) || (numerator instanceof Double && denominator instanceof Double)) {
-            int diff1 = ("" + numerator).length()-("" + numerator).indexOf('.')-1;
-            int diff2 = ("" + denominator).length()-("" + denominator).indexOf('.')-1;
-            diff1 = Math.max(diff2, diff1);
-            this.numerator = (int) ((float) numerator*Math.pow(10, diff1));
-            this.denominator = (int) ((float) denominator*Math.pow(10, diff1));
-        } else if (numerator instanceof Fraction && denominator instanceof Fraction) {
-            this.numerator = numerator;
-            this.denominator = denominator;
-        } else {
-            throw new IllegalArgumentException("Inputs as Objects must be instances of Fraction class only.");
-        }
-    }
-
-    private Object getDenominator() {
+    public Fraction getDenominator() {
         return denominator;
     }
 
-    private void setDenominator(Object denominator) {
-        this.denominator = denominator;
+    public void setDenominator(double denominator) {
+        this.denominator = new Fraction(denominator, 1);
     }
 
-    private Object getNumerator() {
+    public Fraction getNumerator() {
         return numerator;
     }
 
-    private void setNumerator(Object numerator) {
-        this.numerator = numerator;
+    public void setNumerator(double numerator) {
+        this.numerator = new Fraction(numerator, 1);
     }
 
-    private int getNumeratorValue() {
-        System.out.println(numerator.getClass());
-        if (numerator instanceof Integer) return (int) numerator;
-        return -1;
+    public double getNumeratorValue() {
+        return Double.parseDouble(String.valueOf(this.getNumerator().getNumerator()));
     }
 
-    private int getDenominatorValue() {
-        if (denominator instanceof Integer) return (int) denominator;
-        return -1;
+    public double getDenominatorValue() {
+        return Double.parseDouble(String.valueOf(this.getDenominator().getNumerator()));
     }
 
-    public Fraction simplify(Fraction fraction) {       //Check me, not sure if right
-        if (fraction.getNumerator() instanceof Fraction) fraction.setNumerator(simplify((Fraction) numerator));
-        if (fraction.getDenominator() instanceof  Fraction) fraction.setDenominator(simplify((Fraction) denominator));
-        if (numerator instanceof Integer && denominator instanceof Integer) {
-            if (getNumeratorValue()%getDenominatorValue() == 0) {
-                numerator = 1;
-                denominator = getDenominatorValue()/getNumeratorValue();
-            }
-        }
-        return fraction;
-    }
+    ///public double simplify() {}
 
-    public String displayComplex(Fraction fraction) {
-        if (fraction.numerator instanceof Fraction) fraction.setNumerator(displayComplex((Fraction) numerator));
-        if (fraction.denominator instanceof Fraction) fraction.setDenominator(displayComplex((Fraction) denominator));
-        return "("+fraction.getNumeratorValue()+"/"+fraction.getDenominatorValue()+")";
-    }
-
-    public String display() {
-        if (numerator instanceof Integer && denominator instanceof Integer) {
-            return "("+getNumeratorValue()+"/"+getDenominatorValue()+")";
-        } else {
-            return displayComplex(new Fraction(numerator, denominator));
-        }
-    }
+    ///public String display() {}
 
     public Fraction add(Fraction b) {
-        return new Fraction((this.getNumeratorValue()*b.getDenominatorValue()) + (b.getNumeratorValue()*this.getDenominatorValue()), this.getDenominatorValue()*b.getDenominatorValue());
+        return new Fraction((this.getNumerator().getNumeratorValue()*this.getNumerator().getDenominatorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue())+(b.getNumerator().getNumeratorValue()*b.getDenominator().getDenominatorValue()*this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue());
     }
 
     public Fraction subtract(Fraction b) {
-        return new Fraction((this.getNumeratorValue()*b.getDenominatorValue()) - (b.getNumeratorValue()*this.getDenominatorValue()), this.getDenominatorValue()*b.getDenominatorValue());
+        return new Fraction((this.getNumerator().getNumeratorValue()*this.getNumerator().getDenominatorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue())-(b.getNumerator().getNumeratorValue()*b.getDenominator().getDenominatorValue()*this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue());
     }
 
     public Fraction multiply(Fraction b) {
-        return new Fraction(this.getNumeratorValue()*b.getNumeratorValue(), this.getDenominatorValue()*b.getDenominatorValue());
+        return new Fraction(this.getNumerator().getNumeratorValue()*this.getDenominator().getDenominatorValue()*b.getNumerator().getNumeratorValue()*b.getDenominator().getDenominatorValue(), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue());
     }
 
     public Fraction divide(Fraction b) {
-        return new Fraction(this.getNumeratorValue()*b.getDenominatorValue(), this.getDenominatorValue()*b.getNumeratorValue());
+        return new Fraction(this.getNumerator().getNumeratorValue()*this.getDenominator().getDenominatorValue()*b.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue(), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getNumeratorValue()*this.getDenominator().getDenominatorValue());
     }
 }
