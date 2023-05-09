@@ -1,73 +1,44 @@
-public class Fraction {
+public class Fraction <T, E> {
 
-    private Fraction numerator;
-    private Fraction denominator;
+    private T numerator;
+    private E denominator;
+    private final boolean simple;
 
-    public Fraction(Object numerator, Object denominator) {
-        new Fraction(numerator, denominator);
-    }
-
-    private Fraction(double numerator, double denominator) {
-        this.numerator = new Fraction(numerator, 1);
-        this.denominator = new Fraction(denominator, 1);
-    }
-
-    private Fraction(Fraction numerator, Fraction denominator) {
+    public Fraction(T numerator, E denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
+        simple = numerator instanceof Double && denominator instanceof Double;
     }
 
-    private Fraction(Fraction numerator, double denominator) {
-        this.numerator = numerator;
-        this.denominator = new Fraction(denominator, 1);
-    }
-
-    private Fraction(double numerator, Fraction denominator) {
-        this.numerator = new Fraction(numerator, 1);
-        this.denominator = denominator;
-    }
-
-    public Fraction getDenominator() {
-        return denominator;
-    }
-
-    public void setDenominator(double denominator) {
-        this.denominator = new Fraction(denominator, 1);
-    }
-
-    public Fraction getNumerator() {
+    public T getNumerator() {
         return numerator;
     }
 
-    public void setNumerator(double numerator) {
-        this.numerator = new Fraction(numerator, 1);
+    public E getDenominator() {
+        return denominator;
     }
 
-    public double getNumeratorValue() {
-        return Double.parseDouble(String.valueOf(this.getNumerator().getNumerator()));
+    public void setNumerator(T numerator) {
+        this.numerator = numerator;
     }
 
-    public double getDenominatorValue() {
-        return Double.parseDouble(String.valueOf(this.getDenominator().getNumerator()));
+    public void setDenominator(E denominator) {
+        this.denominator = denominator;
     }
 
-    ///public double simplify() {}
+    public boolean isSimple() {
+        return simple;
+    }
+
+    ///public void simplify() {}
 
     ///public String display() {}
 
-    public Fraction add(Fraction b) {
-        return new Fraction((this.getNumerator().getNumeratorValue()*this.getNumerator().getDenominatorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue())+(b.getNumerator().getNumeratorValue()*b.getDenominator().getDenominatorValue()*this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue());
-    }
+    ///public void add(Fraction<T, E> b)
 
-    public Fraction subtract(Fraction b) {
-        return new Fraction((this.getNumerator().getNumeratorValue()*this.getNumerator().getDenominatorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue())-(b.getNumerator().getNumeratorValue()*b.getDenominator().getDenominatorValue()*this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue());
-    }
+    ///public Fraction subtract(Fraction b)
 
-    public Fraction multiply(Fraction b) {
-        return new Fraction(this.getNumerator().getNumeratorValue()*this.getDenominator().getDenominatorValue()*b.getNumerator().getNumeratorValue()*b.getDenominator().getDenominatorValue(), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getDenominatorValue()*b.getDenominator().getNumeratorValue());
-    }
+    ///public Fraction multiply(Fraction b)
 
-    public Fraction divide(Fraction b) {
-        return new Fraction(this.getNumerator().getNumeratorValue()*this.getDenominator().getDenominatorValue()*b.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue(), this.getNumerator().getDenominatorValue()*this.getDenominator().getNumeratorValue()*b.getNumerator().getNumeratorValue()*this.getDenominator().getDenominatorValue());
-    }
+    ///public Fraction divide(Fraction b)
 }
